@@ -137,17 +137,53 @@ h1 {
         @apply w-16 p-1 text-sm;
     }
     .button {
-        @apply py-2 px-4 text-xs;
-        /* Stack buttons vertically on very small screens */
-        @apply w-full mb-2;
+        @apply py-2 px-4 text-xs w-full; /* Removed mb-2, rely on flex gap for vertical spacing */
     }
-    .flex-col.sm\:flex-row { /* Target the button container specifically */
-        @apply flex-col;
+    /* .flex-col.sm\:flex-row rule removed as it's redundant here due to mobile-first sm:flex-row */
+    .button svg {
+        @apply w-4 h-4 mr-1; /* Smaller icon and reduced margin for text-xs buttons */
     }
     #totalPointsDisplay {
         @apply text-2xl p-3 mb-6;
     }
     h1 {
         @apply text-2xl mb-6;
+    }
+
+    /* Responsive table handling for small screens */
+    .table-responsive-wrapper {
+        @apply overflow-x-auto w-full; /* Enable horizontal scroll */
+        -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+        /* Margin will be handled by the table itself or this wrapper based on screen size */
+    }
+
+    #taskTable th {
+        @apply whitespace-nowrap; /* Prevent headers from wrapping to aid horizontal scroll */
+    }
+
+    /* Remove table's own bottom margin when inside the scrolling wrapper on mobile,
+       the wrapper will take care of it. */
+    table {
+        @apply mb-0; /* Table itself has no margin, wrapper controls it */
+    }
+    .table-responsive-wrapper {
+        @apply mb-8; /* Wrapper provides the bottom margin, consistent with original table mb */
+    }
+}
+
+/* Styles for screens larger than 480px (where table is not scrolling) */
+@media (min-width: 481px) {
+    .table-responsive-wrapper {
+        @apply overflow-x-visible; /* Disable horizontal scroll */
+        /* Remove margin from wrapper, table will have its own */
+        @apply mb-0;
+    }
+    /* Table gets its margin back */
+    table {
+        @apply mb-8; /* Original margin for larger screens */
+    }
+
+    #taskTable th {
+        @apply whitespace-normal; /* Allow headers to wrap again if needed on larger screens */
     }
 }
