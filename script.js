@@ -1,3 +1,5 @@
+const LOCAL_STORAGE_KEY = 'leagueTasksData';
+
 /**
  * Calculates the total points based on user input for each task,
  * respecting daily limits and updating the 'Points Acquired' for each task.
@@ -46,6 +48,23 @@ function calculatePoints() {
     setTimeout(() => {
         totalPointsDisplayElement.classList.remove('points-updated-animation');
     }, 500); // Duration of the animation
+
+    // Save current task counts to local storage
+    saveTasksToLocalStorage();
+}
+
+/**
+ * Saves the current input counts for all tasks to local storage.
+ */
+function saveTasksToLocalStorage() {
+    const tasksData = [];
+    const rows = document.querySelectorAll('#taskTable tbody tr');
+    rows.forEach(row => {
+        const taskId = row.getAttribute('data-task-id');
+        const inputElement = row.querySelector('input[type="number"]');
+        tasksData.push({ taskId: taskId, count: inputElement.value });
+    });
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(tasksData));
 }
 
 /**
@@ -59,7 +78,9 @@ function resetTasks() {
         input.value = 0; // Set input value to 0
     });
     // Recalculate points after resetting inputs
-    calculatePoints();
+    calculatePoints(); // This will also call saveTasksToLocalStorage, saving the reset state (empty values)
+    // Clear the specific local storage item
+    localStorage.removeItem(LOCAL_STORAGE_KEY);
     // Ensure all tasks are visible after reset
     showAllTasks();
 }
@@ -112,5 +133,28 @@ function showAllTasks() {
     });
 }
 
-// Initial calculation when the page loads
-document.addEventListener('DOMContentLoaded', calculatePoints);
+/**
+ * Loads task input counts from local storage and populates the input fields.
+ */
+function loadTasksFromLocalStorage() {
+    const savedTasks = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (savedTasks) {
+        const tasksData = JSON.parse(savedTasks);
+        tasksData.forEach(taskData => {
+            // Find the row corresponding to the taskId
+            const row = document.querySelector(`#taskTable tbody tr[data-task-id="${taskData.taskId}"]`);
+            if (row) {
+                const inputElement = row.querySelector('input[type="number"]');
+                if (inputElement) {
+                    inputElement.value = taskData.count;
+                }
+            }
+        });
+    }
+}
+
+// When the page loads, load tasks from local storage and then calculate points
+document.addEventListener('DOMContentLoaded', () => {
+    loadTasksFromLocalStorage();
+    calculatePoints(); // Calculate points based on loaded (or default) values
+});
