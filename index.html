@@ -4,91 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maximizing My League Reward</title>
+    <!-- Google Fonts Import for Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
     <!-- Tailwind CSS CDN for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /* Custom styles for the Inter font and general body layout */
-        body {
-            font-family: 'Inter', sans-serif;
-            /* Apply a more dynamic and vibrant gradient background to the body */
-            @apply bg-gradient-to-br from-indigo-300 via-purple-300 to-pink-300 flex flex-col items-center justify-center min-h-screen p-4;
-        }
-        /* Styling for the main container */
-        .container {
-            @apply bg-white rounded-3xl shadow-2xl p-6 md:p-8 lg:p-10 max-w-4xl w-full
-                   ring-8 ring-purple-400 transform hover:scale-105 transition-all duration-300 ease-in-out
-                   border-8 border-white border-opacity-70; /* Even more prominent border and shadow */
-        }
-        /* Table styling */
-        table {
-            @apply w-full border-collapse mb-6;
-        }
-        /* Table header and data cell styling - **CRITICAL BORDER ENHANCEMENT & CENTERING FIX** */
-        th, td {
-            @apply border-5 border-indigo-500 p-4 flex items-center justify-center; /* Explicitly use flex for perfect centering */
-            box-shadow: 0 0 5px rgba(0,0,0,0.1); /* Subtle shadow for each cell */
-        }
-        th {
-            @apply bg-indigo-700 text-white font-extrabold uppercase tracking-widest text-xl
-                   shadow-lg; /* Darker, more impactful header with larger text */
-        }
-        /* Table row hover effect for better interactivity */
-        tbody tr:hover {
-            @apply bg-indigo-50 transition-colors duration-200 transform scale-y-105; /* More pronounced hover effect */
-        }
-        /* Striped rows for better readability */
-        tbody tr:nth-child(odd) {
-            @apply bg-gray-50;
-        }
-        tbody tr:nth-child(even) {
-            @apply bg-white;
-        }
-
-        /* Input field styling */
-        input[type="number"] {
-            @apply w-28 p-3 border-3 border-indigo-400 rounded-lg text-center text-xl font-bold
-                   focus:outline-none focus:ring-5 focus:ring-purple-600 shadow-md
-                   hover:border-indigo-600 transition-colors duration-200;
-        }
-        /* Button styling */
-        .button {
-            @apply bg-gradient-to-r from-purple-600 to-indigo-700 text-white font-bold py-4 px-10 rounded-full shadow-2xl
-                   hover:from-purple-700 hover:to-indigo-800 hover:shadow-3xl transition duration-300 ease-in-out cursor-pointer
-                   active:scale-90 transform; /* Enhanced gradient, larger size, and more dramatic active state */
-        }
-        /* Styling for the total points display */
-        #totalPointsDisplay {
-            @apply text-5xl font-extrabold text-indigo-800 mb-12 p-8 rounded-3xl shadow-inner-xl
-                   bg-gradient-to-r from-indigo-100 to-purple-100 border-l-10 border-purple-600 text-center
-                   transform scale-100 animate-pulse-subtle; /* Even more prominent with new gradient and animation */
-        }
-
-        /* Keyframe for a subtle pulse animation */
-        @keyframes pulse-subtle {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.01); opacity: 0.99; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-        .animate-pulse-subtle {
-            animation: pulse-subtle 2s infinite ease-in-out;
-        }
-
-        /* Responsive adjustments for table cells */
-        @media (max-width: 768px) {
-            th, td {
-                @apply text-base px-2 py-2 border-3; /* Adjusted border for smaller screens */
-            }
-            input[type="number"] {
-                @apply w-20 p-2 text-base;
-            }
-            .button {
-                @apply py-2 px-5 text-base;
-            }
-            #totalPointsDisplay {
-                @apply text-3xl p-4;
-            }
-        }
-    </style>
+    <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body class="font-inter">
 
@@ -126,122 +49,30 @@
             Total Points: <span id="totalPoints">0</span>
         </div>
 
-        <div class="flex flex-col sm:flex-row justify-center gap-6">
-            <button class="button" onclick="resetTasks()">Reset All</button>
-            <button class="button" onclick="filterIncomplete()">View Incomplete Tasks</button>
-            <button class="button" onclick="showAllTasks()">Show All Tasks</button>
+        <div class="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6">
+            <button class="button flex items-center justify-center" onclick="resetTasks()">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-2">
+                    <path fill-rule="evenodd" d="M4.755 10.059a7.5 7.5 0 0112.548-3.364l1.903 1.903h-4.5V4.5l1.903 1.903a9 9 0 00-15.057 4.019v-.001H2.25l.684 1.902a9.003 9.003 0 004.685 4.685l1.902.683v-2.25h-.001a7.502 7.502 0 01-3.364-12.548zM19.75 14.25l-.684-1.902a9.003 9.003 0 00-4.685-4.685l-1.902-.683v2.25h.001a7.502 7.502 0 013.364 12.548l-1.903-1.903h4.5v4.5l-1.903-1.903a9 9 0 0015.057-4.019v.001H21.75l-.684-1.902a9.003 9.003 0 00-4.685-4.685z" clip-rule="evenodd" />
+                </svg>
+                Reset All
+            </button>
+            <button class="button flex items-center justify-center" onclick="filterIncomplete()">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-2">
+                    <path fill-rule="evenodd" d="M3.792 2.938A49.069 49.069 0 0112 2.25c2.797 0 5.54.236 8.209.688a1.857 1.857 0 011.541 1.836v1.044a3 3 0 01-.879 2.121l-6.182 6.182a1.5 1.5 0 00-.439 1.061v2.927a3 3 0 01-1.658 2.684l-1.757.878A.75.75 0 019.75 21v-5.818a1.5 1.5 0 00-.44-1.06L3.13 7.938a3 3 0 01-.879-2.121V4.774c0-.897.64-1.683 1.542-1.836z" clip-rule="evenodd" />
+                </svg>
+                View Incomplete
+            </button>
+            <button class="button flex items-center justify-center" onclick="showAllTasks()">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-2">
+                    <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
+                    <path fill-rule="evenodd" d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a.75.75 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z" clip-rule="evenodd" />
+                </svg>
+                Show All Tasks
+            </button>
         </div>
     </div>
 
-    <script>
-        /**
-         * Calculates the total points based on user input for each task,
-         * respecting daily limits and updating the 'Points Acquired' for each task.
-         */
-        function calculatePoints() {
-            let total = 0;
-            // Select all task rows in the table body
-            const rows = document.querySelectorAll('#taskTable tbody tr');
-
-            rows.forEach(row => {
-                // Get the base points for the task (from the 3rd cell, index 2)
-                const pointsPerTask = parseInt(row.cells[2].textContent);
-                // Get the daily limit for the task (from the 4th cell, index 3)
-                const dailyLimit = parseInt(row.cells[3].textContent);
-                // Get the input element for the task count
-                const inputElement = row.querySelector('input[type="number"]');
-
-                // Validate input: ensure it's a non-negative number
-                let count = parseInt(inputElement.value);
-                if (isNaN(count) || count < 0) {
-                    count = 0; // Default to 0 if invalid
-                    inputElement.value = 0; // Reset input field to 0
-                }
-
-                // Ensure the count does not exceed the daily limit
-                const effectiveCount = Math.min(count, dailyLimit);
-
-                // Calculate points acquired for this specific task
-                const pointsAcquired = effectiveCount * pointsPerTask;
-
-                // Update the 'Points Acquired' cell for the current task
-                row.querySelector('.points-acquired').textContent = pointsAcquired;
-
-                // Add to the overall total points
-                total += pointsAcquired;
-            });
-
-            // Update the displayed total points
-            document.getElementById('totalPoints').textContent = total;
-        }
-
-        /**
-         * Resets all task count input fields to 0 and recalculates points.
-         * Also ensures all task rows are visible.
-         */
-        function resetTasks() {
-            // Select all number input fields within the task table
-            const inputs = document.querySelectorAll('#taskTable input[type="number"]');
-            inputs.forEach(input => {
-                input.value = 0; // Set input value to 0
-            });
-            // Recalculate points after resetting inputs
-            calculatePoints();
-            // Ensure all tasks are visible after reset
-            showAllTasks();
-        }
-
-        /**
-         * Filters the task table to only display tasks that are incomplete
-         * (i.e., where the 'Points Acquired' is less than the maximum possible points for that task).
-         * This function now recalculates points based on current input to ensure accuracy.
-         */
-        function filterIncomplete() {
-            // Select all task rows in the table body
-            const rows = document.querySelectorAll('#taskTable tbody tr');
-
-            rows.forEach(row => {
-                // Get the base points for the task
-                const pointsPerTask = parseInt(row.cells[2].textContent);
-                // Get the daily limit for the task
-                const dailyLimit = parseInt(row.cells[3].textContent);
-                // Get the input element for the task count
-                const inputElement = row.querySelector('input[type="number"]');
-
-                // Recalculate the count and points acquired based on the current input value
-                let count = parseInt(inputElement.value);
-                if (isNaN(count) || count < 0) {
-                    count = 0;
-                }
-                const effectiveCount = Math.min(count, dailyLimit);
-                const pointsAcquiredForFilter = effectiveCount * pointsPerTask; // Recalculate for filtering
-
-                // Calculate the maximum possible points for this task
-                const maxPossiblePoints = pointsPerTask * dailyLimit;
-
-                // If points acquired are less than max possible, the task is incomplete
-                if (pointsAcquiredForFilter < maxPossiblePoints) {
-                    row.style.display = ""; // Show the row
-                } else {
-                    row.style.display = "none"; // Hide the row
-                }
-            });
-        }
-
-        /**
-         * Shows all task rows in the table, effectively clearing any filters.
-         */
-        function showAllTasks() {
-            // Select all task rows in the table body
-            const rows = document.querySelectorAll('#taskTable tbody tr');
-            rows.forEach(row => {
-                row.style.display = ""; // Set display to default (empty string) to show the row
-            });
-        }
-
-        // Initial calculation when the page loads
-        document.addEventListener('DOMContentLoaded', calculatePoints);
-    </script>
-
+    <!-- Link to external JavaScript file -->
+    <script src="script.js"></script>
 </body>
 </html>

@@ -1,0 +1,153 @@
+/* Custom styles for the Inter font and general body layout */
+body {
+    font-family: 'Inter', sans-serif;
+    /* Apply a more dynamic and vibrant gradient background to the body */
+    @apply bg-gradient-to-br from-indigo-400 via-purple-400 to-pink-400 flex flex-col items-center justify-center min-h-screen p-4;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Styling for the main container */
+.container {
+    @apply bg-white rounded-3xl shadow-2xl p-6 md:p-8 lg:p-10 max-w-5xl w-full /* Increased max-width */
+           ring-8 ring-purple-500 transform hover:scale-[1.02] transition-all duration-300 ease-in-out /* Adjusted hover scale */
+           border-8 border-white border-opacity-70;
+}
+
+/* Table styling */
+table {
+    @apply w-full border-collapse mb-8; /* Increased margin-bottom */
+}
+
+/* Table header and data cell styling */
+th, td {
+    @apply border-4 border-indigo-300 p-3 md:p-4 text-center; /* Unified padding, slightly reduced border thickness for a cleaner look */
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05); /* Softer shadow for cells */
+    transition: all 0.2s ease-in-out;
+}
+
+th {
+    @apply bg-indigo-600 text-white font-bold uppercase tracking-wider text-lg md:text-xl; /* Adjusted font weight and tracking */
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2); /* Added text shadow for depth */
+}
+
+/* Table row hover effect for better interactivity */
+tbody tr:hover {
+    @apply bg-indigo-100 transition-colors duration-200 transform scale-[1.01]; /* Subtle scale on hover */
+}
+
+tbody tr:hover td {
+    @apply border-indigo-400; /* Highlight border on row hover */
+}
+
+/* Striped rows for better readability */
+tbody tr:nth-child(odd) {
+    @apply bg-gray-50;
+}
+tbody tr:nth-child(even) {
+    @apply bg-white;
+}
+
+/* Input field styling */
+input[type="number"] {
+    @apply w-24 md:w-28 p-2 md:p-3 border-2 border-indigo-300 rounded-md text-center text-lg md:text-xl font-medium /* Adjusted border, padding, and font weight */
+           focus:outline-none focus:ring-4 focus:ring-purple-500 focus:border-purple-500 shadow-sm
+           hover:border-indigo-500 transition-all duration-200 ease-in-out;
+}
+
+/* Button styling */
+.button {
+    @apply bg-gradient-to-r from-purple-500 to-indigo-600 text-white font-semibold py-3 px-8 md:py-4 md:px-10 rounded-lg shadow-lg /* Adjusted padding, font-weight, and rounded corners */
+           hover:from-purple-600 hover:to-indigo-700 hover:shadow-xl transition-all duration-300 ease-in-out cursor-pointer
+           active:scale-95 transform; /* Slightly adjusted active scale */
+    text-transform: uppercase; /* Uppercase text for buttons */
+    letter-spacing: 0.5px; /* Added letter spacing */
+}
+
+/* Styling for the total points display */
+#totalPointsDisplay {
+    @apply text-4xl md:text-5xl font-extrabold text-indigo-700 mb-10 md:mb-12 p-6 md:p-8 rounded-xl shadow-inner /* Adjusted font size, padding, and rounding */
+           bg-gradient-to-r from-indigo-50 to-purple-50 border-l-8 border-purple-500 text-center /* Adjusted gradient and border */
+           transform scale-100;
+    transition: all 0.3s ease-in-out; /* Smooth transition for any changes */
+}
+
+/* Keyframe for a subtle pulse animation - kept as is, it's good */
+@keyframes pulse-subtle {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.01); opacity: 0.99; }
+    100% { transform: scale(1); opacity: 1; }
+}
+.animate-pulse-subtle {
+    animation: pulse-subtle 2s infinite ease-in-out;
+}
+
+/* Animation for total points update */
+@keyframes pointsUpdated {
+    0% { transform: scale(1.05); /* Slightly larger */ opacity: 1; }
+    50% { transform: scale(1.1); /* Max scale */ opacity: 0.95; color: #4f46e5; /* Indigo-600 */ }
+    100% { transform: scale(1); opacity: 1; }
+}
+.points-updated-animation {
+    animation: pointsUpdated 0.5s ease-in-out;
+}
+
+/* General heading style if needed elsewhere, though h1 is specifically styled */
+h1 {
+    @apply text-4xl md:text-5xl font-extrabold text-center text-indigo-700 mb-10 md:mb-12 leading-tight;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1); /* Subtle text shadow for the main heading */
+}
+
+
+/* Responsive adjustments for table cells and other elements */
+@media (max-width: 768px) {
+    .container {
+        @apply p-4 md:p-6 ring-4; /* Reduced padding and ring for smaller screens */
+    }
+    th, td {
+        @apply text-sm md:text-base px-2 py-2 border-2; /* Adjusted text size, padding, and border */
+    }
+    input[type="number"] {
+        @apply w-20 p-2 text-base;
+    }
+    .button {
+        @apply py-2 px-5 text-sm; /* Adjusted button padding and text size */
+    }
+    #totalPointsDisplay {
+        @apply text-3xl p-4 mb-8; /* Adjusted total points display for smaller screens */
+    }
+    h1 {
+        @apply text-3xl mb-8; /* Adjusted heading for smaller screens */
+    }
+}
+
+@media (max-width: 480px) { /* Further adjustments for very small screens */
+    body {
+        @apply p-2;
+    }
+    .container {
+        @apply p-3;
+    }
+    th, td {
+        @apply text-xs px-1 py-1;
+         word-break: break-word; /* Allow words to break to prevent overflow */
+    }
+    input[type="number"] {
+        @apply w-16 p-1 text-sm;
+    }
+    .button {
+        @apply py-2 px-4 text-xs;
+        /* Stack buttons vertically on very small screens */
+        @apply w-full mb-2;
+    }
+    .flex-col.sm\:flex-row { /* Target the button container specifically */
+        @apply flex-col;
+    }
+    #totalPointsDisplay {
+        @apply text-2xl p-3 mb-6;
+    }
+    h1 {
+        @apply text-2xl mb-6;
+    }
+}
