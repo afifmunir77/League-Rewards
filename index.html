@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maximizing My League Reward</title>
+    <!-- Tailwind CSS CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for the Inter font and general body layout */
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Apply a more dynamic and vibrant gradient background to the body */
+            @apply bg-gradient-to-br from-indigo-300 via-purple-300 to-pink-300 flex flex-col items-center justify-center min-h-screen p-4;
+        }
+        /* Styling for the main container */
+        .container {
+            @apply bg-white rounded-3xl shadow-2xl p-6 md:p-8 lg:p-10 max-w-4xl w-full
+                   ring-8 ring-purple-400 transform hover:scale-105 transition-all duration-300 ease-in-out
+                   border-8 border-white border-opacity-70; /* Even more prominent border and shadow */
+        }
+        /* Table styling */
+        table {
+            @apply w-full border-collapse mb-6;
+        }
+        /* Table header and data cell styling - **CRITICAL BORDER ENHANCEMENT & CENTERING FIX** */
+        th, td {
+            @apply border-5 border-indigo-500 p-4 flex items-center justify-center; /* Explicitly use flex for perfect centering */
+            box-shadow: 0 0 5px rgba(0,0,0,0.1); /* Subtle shadow for each cell */
+        }
+        th {
+            @apply bg-indigo-700 text-white font-extrabold uppercase tracking-widest text-xl
+                   shadow-lg; /* Darker, more impactful header with larger text */
+        }
+        /* Table row hover effect for better interactivity */
+        tbody tr:hover {
+            @apply bg-indigo-50 transition-colors duration-200 transform scale-y-105; /* More pronounced hover effect */
+        }
+        /* Striped rows for better readability */
+        tbody tr:nth-child(odd) {
+            @apply bg-gray-50;
+        }
+        tbody tr:nth-child(even) {
+            @apply bg-white;
+        }
+
+        /* Input field styling */
+        input[type="number"] {
+            @apply w-28 p-3 border-3 border-indigo-400 rounded-lg text-center text-xl font-bold
+                   focus:outline-none focus:ring-5 focus:ring-purple-600 shadow-md
+                   hover:border-indigo-600 transition-colors duration-200;
+        }
+        /* Button styling */
+        .button {
+            @apply bg-gradient-to-r from-purple-600 to-indigo-700 text-white font-bold py-4 px-10 rounded-full shadow-2xl
+                   hover:from-purple-700 hover:to-indigo-800 hover:shadow-3xl transition duration-300 ease-in-out cursor-pointer
+                   active:scale-90 transform; /* Enhanced gradient, larger size, and more dramatic active state */
+        }
+        /* Styling for the total points display */
+        #totalPointsDisplay {
+            @apply text-5xl font-extrabold text-indigo-800 mb-12 p-8 rounded-3xl shadow-inner-xl
+                   bg-gradient-to-r from-indigo-100 to-purple-100 border-l-10 border-purple-600 text-center
+                   transform scale-100 animate-pulse-subtle; /* Even more prominent with new gradient and animation */
+        }
+
+        /* Keyframe for a subtle pulse animation */
+        @keyframes pulse-subtle {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.01); opacity: 0.99; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .animate-pulse-subtle {
+            animation: pulse-subtle 2s infinite ease-in-out;
+        }
+
+        /* Responsive adjustments for table cells */
+        @media (max-width: 768px) {
+            th, td {
+                @apply text-base px-2 py-2 border-3; /* Adjusted border for smaller screens */
+            }
+            input[type="number"] {
+                @apply w-20 p-2 text-base;
+            }
+            .button {
+                @apply py-2 px-5 text-base;
+            }
+            #totalPointsDisplay {
+                @apply text-3xl p-4;
+            }
+        }
+    </style>
+</head>
+<body class="font-inter">
+
+    <div class="container">
+        <!-- Entire title is now blue -->
+        <h1 class="text-5xl md:text-6xl font-extrabold text-center text-indigo-700 mb-12 leading-tight">Maximizing My League Reward</h1>
+
+        <table id="taskTable">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Title</th>
+                    <th>Points</th>
+                    <th>Daily Limit</th>
+                    <th>Count</th>
+                    <th>Points Acquired</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Task rows -->
+                <tr data-task-id="1"><td>1</td><td>Watch Ads</td><td>10</td><td>5</td><td><input type="number" min="0" value="0" oninput="calculatePoints()"></td><td class="points-acquired">0</td></tr>
+                <tr data-task-id="2"><td>2</td><td>Open Packs</td><td>20</td><td>5</td><td><input type="number" min="0" value="0" oninput="calculatePoints()"></td><td class="points-acquired">0</td></tr>
+                <tr data-task-id="3"><td>3</td><td>Place Market Purchase/Sell Orders</td><td>15</td><td>2</td><td><input type="number" min="0" value="0" oninput="calculatePoints()"></td><td class="points-acquired">0</td></tr>
+                <tr data-task-id="4"><td>4</td><td>Organize Friendly Matches</td><td>15</td><td>1</td><td><input type="number" min="0" value="0" oninput="calculatePoints()"></td><td class="points-acquired">0</td></tr>
+                <tr data-task-id="5"><td>5</td><td>Join League Tournaments</td><td>10</td><td>1</td><td><input type="number" min="0" value="0" oninput="calculatePoints()"></td><td class="points-acquired">0</td></tr>
+                <tr data-task-id="6"><td>6</td><td>Complete H2H Matches</td><td>20</td><td>5</td><td><input type="number" min="0" value="0" oninput="calculatePoints()"></td><td class="points-acquired">0</td></tr>
+                <tr data-task-id="7"><td>7</td><td>Complete VSA Matches</td><td>20</td><td>5</td><td><input type="number" min="0" value="0" oninput="calculatePoints()"></td><td class="points-acquired">0</td></tr>
+                <tr data-task-id="8"><td>8</td><td>Complete MM Matches</td><td>20</td><td>5</td><td><input type="number" min="0" value="0" oninput="calculatePoints()"></td><td class="points-acquired">0</td></tr>
+                <tr data-task-id="9"><td>9</td><td>Complete Skill Games</td><td>10</td><td>5</td><td><input type="number" min="0" value="0" oninput="calculatePoints()"></td><td class="points-acquired">0</td></tr>
+                <tr data-task-id="10"><td>10</td><td>Complete Matches in Live Events</td><td>15</td><td>5</td><td><input type="number" min="0" value="0" oninput="calculatePoints()"></td><td class="points-acquired">0</td></tr>
+            </tbody>
+        </table>
+
+        <div id="totalPointsDisplay">
+            Total Points: <span id="totalPoints">0</span>
+        </div>
+
+        <div class="flex flex-col sm:flex-row justify-center gap-6">
+            <button class="button" onclick="resetTasks()">Reset All</button>
+            <button class="button" onclick="filterIncomplete()">View Incomplete Tasks</button>
+            <button class="button" onclick="showAllTasks()">Show All Tasks</button>
+        </div>
+    </div>
+
+    <script>
+        /**
+         * Calculates the total points based on user input for each task,
+         * respecting daily limits and updating the 'Points Acquired' for each task.
+         */
+        function calculatePoints() {
+            let total = 0;
+            // Select all task rows in the table body
+            const rows = document.querySelectorAll('#taskTable tbody tr');
+
+            rows.forEach(row => {
+                // Get the base points for the task (from the 3rd cell, index 2)
+                const pointsPerTask = parseInt(row.cells[2].textContent);
+                // Get the daily limit for the task (from the 4th cell, index 3)
+                const dailyLimit = parseInt(row.cells[3].textContent);
+                // Get the input element for the task count
+                const inputElement = row.querySelector('input[type="number"]');
+
+                // Validate input: ensure it's a non-negative number
+                let count = parseInt(inputElement.value);
+                if (isNaN(count) || count < 0) {
+                    count = 0; // Default to 0 if invalid
+                    inputElement.value = 0; // Reset input field to 0
+                }
+
+                // Ensure the count does not exceed the daily limit
+                const effectiveCount = Math.min(count, dailyLimit);
+
+                // Calculate points acquired for this specific task
+                const pointsAcquired = effectiveCount * pointsPerTask;
+
+                // Update the 'Points Acquired' cell for the current task
+                row.querySelector('.points-acquired').textContent = pointsAcquired;
+
+                // Add to the overall total points
+                total += pointsAcquired;
+            });
+
+            // Update the displayed total points
+            document.getElementById('totalPoints').textContent = total;
+        }
+
+        /**
+         * Resets all task count input fields to 0 and recalculates points.
+         * Also ensures all task rows are visible.
+         */
+        function resetTasks() {
+            // Select all number input fields within the task table
+            const inputs = document.querySelectorAll('#taskTable input[type="number"]');
+            inputs.forEach(input => {
+                input.value = 0; // Set input value to 0
+            });
+            // Recalculate points after resetting inputs
+            calculatePoints();
+            // Ensure all tasks are visible after reset
+            showAllTasks();
+        }
+
+        /**
+         * Filters the task table to only display tasks that are incomplete
+         * (i.e., where the 'Points Acquired' is less than the maximum possible points for that task).
+         * This function now recalculates points based on current input to ensure accuracy.
+         */
+        function filterIncomplete() {
+            // Select all task rows in the table body
+            const rows = document.querySelectorAll('#taskTable tbody tr');
+
+            rows.forEach(row => {
+                // Get the base points for the task
+                const pointsPerTask = parseInt(row.cells[2].textContent);
+                // Get the daily limit for the task
+                const dailyLimit = parseInt(row.cells[3].textContent);
+                // Get the input element for the task count
+                const inputElement = row.querySelector('input[type="number"]');
+
+                // Recalculate the count and points acquired based on the current input value
+                let count = parseInt(inputElement.value);
+                if (isNaN(count) || count < 0) {
+                    count = 0;
+                }
+                const effectiveCount = Math.min(count, dailyLimit);
+                const pointsAcquiredForFilter = effectiveCount * pointsPerTask; // Recalculate for filtering
+
+                // Calculate the maximum possible points for this task
+                const maxPossiblePoints = pointsPerTask * dailyLimit;
+
+                // If points acquired are less than max possible, the task is incomplete
+                if (pointsAcquiredForFilter < maxPossiblePoints) {
+                    row.style.display = ""; // Show the row
+                } else {
+                    row.style.display = "none"; // Hide the row
+                }
+            });
+        }
+
+        /**
+         * Shows all task rows in the table, effectively clearing any filters.
+         */
+        function showAllTasks() {
+            // Select all task rows in the table body
+            const rows = document.querySelectorAll('#taskTable tbody tr');
+            rows.forEach(row => {
+                row.style.display = ""; // Set display to default (empty string) to show the row
+            });
+        }
+
+        // Initial calculation when the page loads
+        document.addEventListener('DOMContentLoaded', calculatePoints);
+    </script>
+
+</body>
+</html>
